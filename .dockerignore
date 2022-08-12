@@ -1,0 +1,70 @@
+#############################
+### System
+#############################
+
+**/.DS_Store
+**/*.bak
+**/*.swp
+**/*.tmp
+**/*~
+**/desktop.ini
+**/thumbs.db
+
+#############################
+### IDE
+#############################
+
+**/.editorconfig
+**/.vscode/
+**/*.code-workspace
+
+#############################
+### VCS
+#############################
+
+**/.git/
+**/.gitignore
+**/.gitkeep
+
+#############################
+### Docker
+#############################
+
+**/.dockerignore
+**/docker-compose.*.yml
+**/docker-compose.yml
+**/Dockerfile
+
+#############################
+### Kubernetes
+#############################
+
+**/kustomize/
+**/skaffold.yaml
+
+# skaffold build output
+skaffold-build-artifacts.json
+
+#############################
+### Go
+#############################
+
+# builds
+bin/*
+
+# dependencies
+vendor/
+
+# tests
+**/*.test
+**/block.out
+**/cover.out
+**/cpu.out
+**/mem.out
+**/testdata/
+
+#############################
+### Other
+#############################
+
+README.md

@@ -1,0 +1,14 @@
+schemaVersion: 2.0.0
+fileExistenceTests:
+  - name: no go binary
+    path: /usr/local/go/bin/go
+    shouldExist: false
+  - name: goapp binary
+    path: /goapp
+    shouldExist: true
+    uid: 0
+    gid: 0
+    isExecutableBy: any
+metadataTest:
+  entrypoint: ["/goapp"]
+  user: 33:33

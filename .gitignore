@@ -1,0 +1,43 @@
+#############################
+### System
+#############################
+
+.DS_Store
+*.bak
+*.swp
+*.tmp
+*~
+desktop.ini
+thumbs.db
+
+#############################
+### IDE
+#############################
+
+/*.code-workspace
+
+#############################
+### Kubernetes
+#############################
+
+# skaffold build output
+/skaffold-build-artifacts.json
+
+#############################
+### Go
+#############################
+
+# builds
+/bin/*
+!/bin/.gitkeep
+
+# dependencies
+/vendor/
+
+# tests
+*.test
+block.out
+cover.out
+cpu.out
+mem.out
+testdata/
