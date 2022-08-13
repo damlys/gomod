@@ -7,5 +7,15 @@
       "mode": "auto",
       "program": "${fileDirname}",
     },
+    {
+      "name": "Connect To Server",
+      "type": "go",
+      "request": "attach",
+      "mode": "remote",
+      "host": "localhost",
+      "port": 2345,
+      "cwd": "${workspaceFolder}",
+      "remotePath": "/workspace",
+    },
   ]
 }

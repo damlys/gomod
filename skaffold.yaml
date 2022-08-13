@@ -9,7 +9,7 @@ build:
   artifacts:
     - image: ghcr.io/damlys/gomod-goapp
       docker:
-        dockerfile: build/goapp/Dockerfile
+        dockerfile: build/goapp/Dockerfile.debug
   tagPolicy:
     gitCommit: {}
 test:
@@ -20,6 +20,7 @@ profiles:
   - name: dev
     activation:
       - command: dev
+      - command: debug
     deploy:
       kubeContext: docker-desktop
       kustomize:
