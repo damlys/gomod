@@ -21,7 +21,7 @@ $ SKAFFOLD_DIGEST_SOURCE=tag skaffold render --profile=prod | less
 Continuous Development
 
 ```shell
-$ skaffold dev --profile=dev --port-forward=services --trigger=manual
+$ skaffold dev --port-forward=services --trigger=manual
 ```
 
 Debug
@@ -31,7 +31,7 @@ Debug
 - https://github.com/golang/vscode-go/blob/master/docs/debugging.md
 
 ```shell
-$ skaffold debug --profile=dev --skip-tests=true --port-forward=services,debug --trigger=manual --auto-build=true --auto-deploy=true --auto-sync=true
+$ skaffold debug --skip-tests=true --port-forward=services,debug --trigger=manual --auto-build=true --auto-deploy=true --auto-sync=true
 ```
 
 Deploy
