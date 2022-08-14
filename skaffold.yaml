@@ -7,13 +7,13 @@ build:
     push: false
     tryImportMissing: false
   artifacts:
-    - image: ghcr.io/damlys/gomod-goapp
+    - image: goapp
       docker:
         dockerfile: build/goapp/Dockerfile
   tagPolicy:
     gitCommit: {}
 test:
-  - image: ghcr.io/damlys/gomod-goapp
+  - image: goapp
     structureTests:
       - test/goapp/container-structure.yaml
 profiles:

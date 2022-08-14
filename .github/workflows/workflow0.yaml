@@ -17,6 +17,8 @@ on:
 jobs:
   job0:
     runs-on: ubuntu-22.04
+    env:
+      SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
     steps:
       - name: Set Git user
         run: |

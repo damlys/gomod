@@ -9,6 +9,3 @@ configMapGenerator:
 secretGenerator:
   - name: config-envs
   - name: config-files
-images:
-  - name: goapp
-    newName: ghcr.io/damlys/gomod-goapp
