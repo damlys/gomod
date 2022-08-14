@@ -1,7 +1,6 @@
 FROM golang:1.19 AS sdk
 
 RUN go install github.com/go-delve/delve/cmd/dlv@v1
-ENV GODEBUG=""
 
 WORKDIR /workspace
 
@@ -12,6 +11,7 @@ COPY . .
 ARG SKAFFOLD_GO_GCFLAGS
 RUN CGO_ENABLED=0 go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o ./bin/goapp ./cmd/goapp
 
+ENV GODEBUG=""
 ENTRYPOINT ["/workspace/bin/goapp"]
 CMD []
 

@@ -31,7 +31,7 @@ Debug
 - https://github.com/golang/vscode-go/blob/master/docs/debugging.md
 
 ```shell
-$ skaffold debug --skip-tests=true --port-forward=services,debug --trigger=manual --auto-build=true --auto-deploy=true --auto-sync=true
+$ skaffold debug --port-forward=services,debug --trigger=manual --auto-build=true --auto-deploy=true --auto-sync=true
 ```
 
 Deploy

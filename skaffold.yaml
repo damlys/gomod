@@ -38,6 +38,9 @@ profiles:
       - op: replace
         path: /build/artifacts/0/docker/target
         value: sdk
+      - op: replace
+        path: /test
+        value: []
   - name: prod
     deploy:
       kubeContext: docker-desktop
