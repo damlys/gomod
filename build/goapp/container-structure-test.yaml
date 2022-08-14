@@ -1,7 +1,13 @@
 schemaVersion: 2.0.0
 fileExistenceTests:
+  - name: no go directory
+    path: /go
+    shouldExist: false
   - name: no go binary
     path: /usr/local/go/bin/go
+    shouldExist: false
+  - name: no workspace directory
+    path: /workspace
     shouldExist: false
   - name: goapp binary
     path: /goapp

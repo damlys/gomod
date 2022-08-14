@@ -25,6 +25,20 @@ profiles:
       kustomize:
         paths:
           - deployments/goapp/overlays/dev
+  - name: debug
+    activation:
+      - command: debug
+    patches:
+      - op: add
+        path: /build/artifacts/0/docker/target
+        value: sdk
+      - op: remove
+        path: /test/0
+    deploy:
+      kubeContext: docker-desktop
+      kustomize:
+        paths:
+          - deployments/goapp/overlays/dev
   - name: prod
     deploy:
       kubeContext: docker-desktop

@@ -1,7 +1,17 @@
 {
   "configurations": [
     {
-      "name": "Launch Package",
+      "name": "Connect to localhost",
+      "type": "go",
+      "request": "attach",
+      "mode": "remote",
+      "host": "localhost",
+      "port": 56268,
+      "cwd": "${workspaceFolder}",
+      "remotePath": "/workspace",
+    },
+    {
+      "name": "Launch current package",
       "type": "go",
       "request": "launch",
       "mode": "auto",

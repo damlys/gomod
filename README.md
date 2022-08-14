@@ -21,7 +21,17 @@ $ SKAFFOLD_DIGEST_SOURCE=tag skaffold render --profile=prod | less
 Continuous Development
 
 ```shell
-$ skaffold dev --profile=dev --port-forward=services --trigger=manual
+$ skaffold dev --port-forward
+```
+
+Debug
+
+- https://skaffold.dev/docs/workflows/debug/
+- https://github.com/go-delve/delve/tree/master/Documentation
+- https://github.com/golang/vscode-go/blob/master/docs/debugging.md
+
+```shell
+$ skaffold debug --port-forward=services,debug --trigger=manual --auto-build=true --auto-deploy=true --auto-sync=true
 ```
 
 Deploy
@@ -37,7 +47,3 @@ Destroy
 $ skaffold delete --profile=dev
 $ skaffold delete --profile=prod
 ```
-
-TODO
-
-- Remote Debug Go Service (`skaffold debug`)
