@@ -10,7 +10,6 @@ build:
     - image: ghcr.io/damlys/gomod-goapp
       docker:
         dockerfile: build/goapp/Dockerfile
-        target: rte
   tagPolicy:
     gitCommit: {}
 test:
@@ -29,18 +28,17 @@ profiles:
   - name: debug
     activation:
       - command: debug
+    patches:
+      - op: add
+        path: /build/artifacts/0/docker/target
+        value: sdk
+      - op: remove
+        path: /test/0
     deploy:
       kubeContext: docker-desktop
       kustomize:
         paths:
           - deployments/goapp/overlays/dev
-    patches:
-      - op: replace
-        path: /build/artifacts/0/docker/target
-        value: sdk
-      - op: replace
-        path: /test
-        value: []
   - name: prod
     deploy:
       kubeContext: docker-desktop
