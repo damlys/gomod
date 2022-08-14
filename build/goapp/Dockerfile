@@ -1,4 +1,8 @@
 FROM golang:1.19 AS sdk
+# $ cat /etc/passwd | grep "www-data"
+# www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+# $ cat /etc/group | grep "www-data"
+# www-data:x:33:
 
 RUN go install github.com/go-delve/delve/cmd/dlv@v1
 

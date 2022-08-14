@@ -21,7 +21,7 @@ $ SKAFFOLD_DIGEST_SOURCE=tag skaffold render --profile=prod | less
 Continuous Development
 
 ```shell
-$ skaffold dev --port-forward=services --trigger=manual
+$ skaffold dev --port-forward
 ```
 
 Debug
