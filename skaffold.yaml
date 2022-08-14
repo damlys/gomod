@@ -15,7 +15,7 @@ build:
 test:
   - image: ghcr.io/damlys/gomod-goapp
     structureTests:
-      - build/goapp/container-structure-test.yaml
+      - test/goapp/container-structure.yaml
 profiles:
   - name: dev
     activation:
@@ -24,7 +24,7 @@ profiles:
       kubeContext: docker-desktop
       kustomize:
         paths:
-          - deployments/goapp/overlays/dev
+          - deploy/goapp/overlays/dev
   - name: debug
     activation:
       - command: debug
@@ -38,10 +38,10 @@ profiles:
       kubeContext: docker-desktop
       kustomize:
         paths:
-          - deployments/goapp/overlays/dev
+          - deploy/goapp/overlays/dev
   - name: prod
     deploy:
       kubeContext: docker-desktop
       kustomize:
         paths:
-          - deployments/goapp/overlays/prod
+          - deploy/goapp/overlays/prod

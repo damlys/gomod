@@ -32,7 +32,7 @@ thumbs.db
 !/bin/.gitkeep
 
 # dependencies
-/vendor/
+/vendor
 
 # tests
 *.test
@@ -40,4 +40,4 @@ block.out
 cover.out
 cpu.out
 mem.out
-testdata/
+testdata

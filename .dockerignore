@@ -15,14 +15,14 @@
 #############################
 
 **/.editorconfig
-**/.vscode/
+**/.vscode
 **/*.code-workspace
 
 #############################
 ### VCS
 #############################
 
-**/.git/
+**/.git
 **/.gitignore
 **/.gitkeep
 
@@ -39,7 +39,6 @@
 ### Kubernetes
 #############################
 
-**/kustomize/
 **/skaffold.yaml
 
 # skaffold build output
@@ -53,7 +52,7 @@ skaffold-build-artifacts.json
 bin/*
 
 # dependencies
-vendor/
+vendor
 
 # tests
 **/*.test
@@ -61,11 +60,15 @@ vendor/
 **/cover.out
 **/cpu.out
 **/mem.out
-**/testdata/
+**/testdata
 
 #############################
 ### Other
 #############################
 
-.github/
+.github
+build
+deploy
 README.md
+scripts
+test
