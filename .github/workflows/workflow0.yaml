@@ -43,13 +43,10 @@ jobs:
           key: homebrew
           path: /home/runner/.cache/Homebrew
       - name: Install golangci-lint
-        # if: steps.cache-homebrew.outputs.cache-hit != 'true'
         run: brew install --ignore-dependencies golangci-lint
       - name: Install Skaffold
-        # if: steps.cache-homebrew.outputs.cache-hit != 'true'
         run: brew install --ignore-dependencies skaffold
       - name: Install Container Structure Tests
-        # if: steps.cache-homebrew.outputs.cache-hit != 'true'
         run: brew install --ignore-dependencies container-structure-test
 
       - name: Format Go code
