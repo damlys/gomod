@@ -55,31 +55,33 @@ jobs:
         if: steps.cache-brew.outputs.cache-hit != 'true'
         run: brew install container-structure-test
       - name: dump
-        run: ls /home/linuxbrew/.linuxbrew
+        run: |
+          ls /home/linuxbrew/.linuxbrew
+          brew --cache
 
-      - name: Format Go code
-        run: go fmt ./...
-      - name: Vet Go code
-        run: go vet ./...
-      - name: Lint Go code
-        run: golangci-lint run ./...
-      - name: Download Go dependencies
-        run: go mod download
-      - name: Test Go code
-        run: go test -v ./...
+      # - name: Format Go code
+      #   run: go fmt ./...
+      # - name: Vet Go code
+      #   run: go vet ./...
+      # - name: Lint Go code
+      #   run: golangci-lint run ./...
+      # - name: Download Go dependencies
+      #   run: go mod download
+      # - name: Test Go code
+      #   run: go test -v ./...
 
-      - name: Build Docker images
-        run: skaffold build --file-output=skaffold-build-artifacts.json
-      - name: Test Docker images
-        run: skaffold test --build-artifacts=skaffold-build-artifacts.json
+      # - name: Build Docker images
+      #   run: skaffold build --file-output=skaffold-build-artifacts.json
+      # - name: Test Docker images
+      #   run: skaffold test --build-artifacts=skaffold-build-artifacts.json
 
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        name: Deploy to non-prod
-        env:
-          SKAFFOLD_DIGEST_SOURCE: tag
-        run: skaffold render --profile=dev
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        name: Deploy to prod
-        env:
-          SKAFFOLD_DIGEST_SOURCE: tag
-        run: skaffold render --profile=prod
+      # - if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+      #   name: Deploy to non-prod
+      #   env:
+      #     SKAFFOLD_DIGEST_SOURCE: tag
+      #   run: skaffold render --profile=dev
+      # - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      #   name: Deploy to prod
+      #   env:
+      #     SKAFFOLD_DIGEST_SOURCE: tag
+      #   run: skaffold render --profile=prod
