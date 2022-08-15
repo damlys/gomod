@@ -36,53 +36,45 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: "1.19"
-
       - name: Cache Homebrew on Linux
-        id: cache-brew
+        id: cache-homebrew
         uses: actions/cache@v3
         with:
-          key: linux-brew
-          path: |
-            /home/linuxbrew/.linuxbrew
-            ~/.linuxbrew
+          key: homebrew
+          path: /home/runner/.cache/Homebrew
       - name: Install golangci-lint
-        if: steps.cache-brew.outputs.cache-hit != 'true'
+        if: steps.cache-homebrew.outputs.cache-hit != 'true'
         run: brew install golangci-lint
-      - name: Install skaffold
-        if: steps.cache-brew.outputs.cache-hit != 'true'
+      - name: Install Skaffold
+        if: steps.cache-homebrew.outputs.cache-hit != 'true'
         run: brew install skaffold
-      - name: Install container-structure-test
-        if: steps.cache-brew.outputs.cache-hit != 'true'
+      - name: Install Container Structure Tests
+        if: steps.cache-homebrew.outputs.cache-hit != 'true'
         run: brew install container-structure-test
-      - name: dump
-        run: |
-          ls -la /home/linuxbrew/.linuxbrew
-          brew --cache
-          su - linuxbrew -c "brew --cache"
 
-      # - name: Format Go code
-      #   run: go fmt ./...
-      # - name: Vet Go code
-      #   run: go vet ./...
-      # - name: Lint Go code
-      #   run: golangci-lint run ./...
-      # - name: Download Go dependencies
-      #   run: go mod download
-      # - name: Test Go code
-      #   run: go test -v ./...
+      - name: Format Go code
+        run: go fmt ./...
+      - name: Vet Go code
+        run: go vet ./...
+      - name: Lint Go code
+        run: golangci-lint run ./...
+      - name: Download Go dependencies
+        run: go mod download
+      - name: Test Go code
+        run: go test -v ./...
 
-      # - name: Build Docker images
-      #   run: skaffold build --file-output=skaffold-build-artifacts.json
-      # - name: Test Docker images
-      #   run: skaffold test --build-artifacts=skaffold-build-artifacts.json
+      - name: Build Docker images
+        run: skaffold build --file-output=skaffold-build-artifacts.json
+      - name: Test Docker images
+        run: skaffold test --build-artifacts=skaffold-build-artifacts.json
 
-      # - if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-      #   name: Deploy to non-prod
-      #   env:
-      #     SKAFFOLD_DIGEST_SOURCE: tag
-      #   run: skaffold render --profile=dev
-      # - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      #   name: Deploy to prod
-      #   env:
-      #     SKAFFOLD_DIGEST_SOURCE: tag
-      #   run: skaffold render --profile=prod
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        name: Deploy to non-prod
+        env:
+          SKAFFOLD_DIGEST_SOURCE: tag
+        run: skaffold render --profile=dev
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        name: Deploy to prod
+        env:
+          SKAFFOLD_DIGEST_SOURCE: tag
+        run: skaffold render --profile=prod
