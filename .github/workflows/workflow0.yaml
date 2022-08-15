@@ -37,7 +37,7 @@ jobs:
         with:
           go-version: "1.19"
 
-      - name: Cache brew
+      - name: Cache Homebrew on Linux
         id: cache-brew
         uses: actions/cache@v3
         with:
@@ -54,6 +54,8 @@ jobs:
       - name: Install container-structure-test
         if: steps.cache-brew.outputs.cache-hit != 'true'
         run: brew install container-structure-test
+      - name: dump
+        run: ls /home/linuxbrew/.linuxbrew
 
       - name: Format Go code
         run: go fmt ./...
