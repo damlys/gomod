@@ -36,12 +36,25 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: "1.19"
+
+      # - name: Cache brew
+      #   id: cache-brew
+      #   uses: actions/cache@v3
+      #   with:
+      #     key: ${{ runner.os }}-brew
+      #     path: xyz
       - name: Install golangci-lint
+        # if: steps.cache-brew.outputs.cache-hit != 'true'
         run: brew install golangci-lint
-      - name: Install Skaffold
+      - name: Install skaffold
+        # if: steps.cache-brew.outputs.cache-hit != 'true'
         run: brew install skaffold
-      - name: Install Container Structure Tests
+      - name: Install container-structure-test
+        # if: steps.cache-brew.outputs.cache-hit != 'true'
         run: brew install container-structure-test
+      - name: dump
+        run: |
+          ls -l ~/Library/Caches/Homebrew
 
       - name: Format Go code
         run: go fmt ./...
@@ -49,12 +62,14 @@ jobs:
         run: go vet ./...
       - name: Lint Go code
         run: golangci-lint run ./...
+      - name: Download Go dependencies
+        run: go mod download
       - name: Test Go code
         run: go test -v ./...
 
-      - name: Build Docker containers
+      - name: Build Docker images
         run: skaffold build --file-output=skaffold-build-artifacts.json
-      - name: Test Docker containers
+      - name: Test Docker images
         run: skaffold test --build-artifacts=skaffold-build-artifacts.json
 
       - if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
