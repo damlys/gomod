@@ -43,11 +43,11 @@ jobs:
           key: homebrew
           path: /home/runner/.cache/Homebrew
       - name: Install golangci-lint
-        run: brew install --ignore-dependencies golangci-lint
+        run: brew install golangci-lint
       - name: Install Skaffold
-        run: brew install --ignore-dependencies skaffold
+        run: brew install skaffold
       - name: Install Container Structure Tests
-        run: brew install --ignore-dependencies container-structure-test
+        run: brew install container-structure-test
 
       - name: Format Go code
         run: go fmt ./...
