@@ -4,8 +4,6 @@ FROM golang:1.19 AS sdk
 # $ cat /etc/group | grep "www-data"
 # www-data:x:33:
 
-RUN go install github.com/go-delve/delve/cmd/dlv@v1
-
 WORKDIR /workspace
 
 COPY ./go.mod ./go.sum ./
@@ -15,10 +13,6 @@ COPY . .
 ARG SKAFFOLD_GO_GCFLAGS
 RUN CGO_ENABLED=0 go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o ./bin/goapp ./cmd/goapp
 
-ENV GODEBUG=""
-ENTRYPOINT ["/workspace/bin/goapp"]
-CMD []
-
 
 FROM ubuntu:22.04 AS rte
 # $ cat /etc/passwd | grep "www-data"
@@ -27,6 +21,7 @@ FROM ubuntu:22.04 AS rte
 # www-data:x:33:
 
 COPY --from=sdk /workspace/bin/goapp /goapp
+ENV GODEBUG=""
 ENTRYPOINT ["/goapp"]
 CMD []
 USER 33:33

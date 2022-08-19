@@ -7,15 +7,19 @@
       "mode": "remote",
       "host": "localhost",
       "port": 56268,
-      "cwd": "${workspaceFolder}",
-      "remotePath": "/workspace",
+      "substitutePath": [
+        {
+          "from": "${workspaceFolder}",
+          "to": "/workspace"
+        }
+      ]
     },
     {
       "name": "Launch current package",
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${fileDirname}",
-    },
+      "program": "${fileDirname}"
+    }
   ]
 }

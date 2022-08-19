@@ -10,7 +10,7 @@ import (
 func TestHello(t *testing.T) {
 	res := httptest.NewRecorder()
 	req := httptest.NewRequest(http.MethodGet, "/hello", nil)
-	Hello(res, req)
+	hello(res, req)
 
 	if want := "text/plain"; res.Header().Get("Content-Type") != want {
 		t.Errorf(

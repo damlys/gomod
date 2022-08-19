@@ -22,7 +22,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/hello", Hello)
+	http.HandleFunc("/hello", hello)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
