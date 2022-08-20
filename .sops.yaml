@@ -1,3 +1,2 @@
 creation_rules:
-  # https://console.cloud.google.com/security/kms/key/manage/europe-central2/sops/sops-key?project=gomod-0
   - gcp_kms: projects/gomod-0/locations/europe-central2/keyRings/sops/cryptoKeys/sops-key

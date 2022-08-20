@@ -1,3 +1,9 @@
+Edit secret
+
+```shell
+$ EDITOR="code --wait" sops deploy/goapp/overlays/prod/secret.enc.env
+```
+
 Build
 
 ```shell
