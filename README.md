@@ -1,8 +1,8 @@
-Edit secret
+# `gomod`
 
-```shell
-$ EDITOR="code --wait" sops deploy/goapp/overlays/prod/secret.enc.env
-```
+Skaffold template for Go web services
+
+## Skaffold
 
 Build
 
@@ -52,4 +52,18 @@ Destroy
 ```shell
 $ skaffold delete --profile=dev
 $ skaffold delete --profile=prod
+```
+
+## SOPS
+
+View secret
+
+```shell
+$ sops --decrypt deploy/goapp/overlays/prod/secret.enc.env
+```
+
+Edit secret
+
+```shell
+$ EDITOR="code --wait" sops deploy/goapp/overlays/prod/secret.enc.env
 ```
