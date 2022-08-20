@@ -33,7 +33,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: "google-github-actions/auth@v0"
         with:
-          workload_identity_provider: "projects/gomod-0/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
+          workload_identity_provider: "projects/141074763701/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
           service_account: "github-actions@gomod-0.iam.gserviceaccount.com"
       - name: Install Go
         uses: actions/setup-go@v3
