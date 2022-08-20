@@ -16,6 +16,9 @@ on:
       - "!**.md"
 jobs:
   job0:
+    permissions:
+      contents: "read"
+      id-token: "write"
     runs-on: ubuntu-22.04
     steps:
       - name: Set Git user
