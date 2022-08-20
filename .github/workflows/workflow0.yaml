@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - develop
-      - main
+      - feature/sops
       - "releases/**"
     tags:
       - "v**"
@@ -30,6 +30,11 @@ jobs:
           registry: ghcr.io
           username: "${{ github.actor }}"
           password: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Authenticate to Google Cloud
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: "projects/gomod-0/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
+          service_account: "github-actions@gomod-0.iam.gserviceaccount.com"
       - name: Install Go
         uses: actions/setup-go@v3
         with:
@@ -68,9 +73,13 @@ jobs:
           SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
           SKAFFOLD_DIGEST_SOURCE: tag
         run: skaffold render --profile=dev
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/feature/sops'
         name: Deploy to prod
         env:
           SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
           SKAFFOLD_DIGEST_SOURCE: tag
-        run: skaffold render --profile=prod
+        # render command does not trigger deploy hooks
+        run: |
+          ./scripts/sops/decrypt.sh
+          skaffold render --profile=prod
+          ./scripts/sops/rm-decrypted.sh
