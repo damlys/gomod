@@ -53,6 +53,8 @@ jobs:
         run: brew install skaffold
       - name: Install Container Structure Tests
         run: brew install container-structure-test
+      - name: Install SOPS
+        run: brew install sops
 
       - name: Format Go code
         run: go fmt ./...
