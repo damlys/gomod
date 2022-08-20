@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - develop
-      - feature/sops
+      - main
       - "releases/**"
     tags:
       - "v**"
@@ -77,7 +77,7 @@ jobs:
           SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
           SKAFFOLD_DIGEST_SOURCE: tag
         run: skaffold render --profile=dev
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/feature/sops'
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         name: Deploy to prod
         env:
           SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
