@@ -7,21 +7,21 @@ Skaffold template for Go web services
 Build
 
 ```shell
-$ skaffold build
+$ skaffold build --profile=dev
 ```
 
 Test
 
 ```shell
-$ skaffold build --file-output=skaffold-build-artifacts.json
-$ skaffold test --build-artifacts=skaffold-build-artifacts.json
+$ skaffold build --profile=dev --file-output=skaffold-build-artifacts.json
+$ skaffold test --profile=dev --build-artifacts=skaffold-build-artifacts.json
 ```
 
 Render
 
 ```shell
-$ SKAFFOLD_DIGEST_SOURCE=tag skaffold render --profile=dev | less
-$ SKAFFOLD_DIGEST_SOURCE=tag skaffold render --profile=prod | less
+$ skaffold render --profile=dev --digest-source=tag | less
+$ skaffold render --profile=prod --digest-source=tag --default-repo="europe-central2-docker.pkg.dev/gomod-0/gomod" | less
 ```
 
 Continuous Development
@@ -37,14 +37,14 @@ Debug
 - https://github.com/golang/vscode-go/blob/master/docs/debugging.md
 
 ```shell
-$ skaffold debug --port-forward=services,debug --trigger=manual --auto-build=true --auto-deploy=true --auto-sync=true
+$ skaffold debug --port-forward --trigger=manual --auto-build=true --auto-deploy=true --auto-sync=true
 ```
 
 Deploy
 
 ```shell
 $ skaffold run --profile=dev
-$ skaffold run --profile=prod
+$ skaffold run --profile=prod --default-repo="europe-central2-docker.pkg.dev/gomod-0/gomod"
 ```
 
 Destroy

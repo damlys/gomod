@@ -26,17 +26,17 @@ jobs:
           git config --global user.email "github-actions@github.com"
       - name: Clone Git repository
         uses: actions/checkout@v3
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: "${{ github.actor }}"
-          password: "${{ secrets.GITHUB_TOKEN }}"
+
       - name: Authenticate to Google Cloud
         uses: "google-github-actions/auth@v0"
         with:
           workload_identity_provider: "projects/141074763701/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
           service_account: "github-actions@gomod-0.iam.gserviceaccount.com"
+      - name: Authenticate to Docker registry
+        run: gcloud auth configure-docker europe-central2-docker.pkg.dev
+      - name: Authenticate to Kubernetes cluster
+        run: gcloud container clusters get-credentials autopilot-cluster-1 --region europe-central2 --project gomod-0
+
       - name: Install Go
         uses: actions/setup-go@v3
         with:
@@ -67,23 +67,10 @@ jobs:
         run: go test -v ./...
 
       - name: Build Docker images
-        run: skaffold build --file-output=skaffold-build-artifacts.json
+        run: skaffold build --profile=dev --file-output=skaffold-build-artifacts.json
       - name: Test Docker images
-        run: skaffold test --build-artifacts=skaffold-build-artifacts.json
+        run: skaffold test --profile=dev --build-artifacts=skaffold-build-artifacts.json
 
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        name: Deploy to non-prod
-        env:
-          SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
-          SKAFFOLD_DIGEST_SOURCE: tag
-        run: skaffold render --profile=dev
       - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         name: Deploy to prod
-        env:
-          SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
-          SKAFFOLD_DIGEST_SOURCE: tag
-        # render command does not trigger deploy hooks
-        run: |
-          ./scripts/sops/decrypt.sh
-          skaffold render --profile=prod
-          ./scripts/sops/rm-decrypted.sh
+        run: skaffold run --profile=prod --default-repo="europe-central2-docker.pkg.dev/gomod-0/gomod"
