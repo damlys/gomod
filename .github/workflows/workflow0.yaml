@@ -16,6 +16,8 @@ on:
       - "!**.md"
 jobs:
   job0:
+    permissions:
+      id-token: "write"
     runs-on: ubuntu-22.04
     steps:
       - name: Set Git user
@@ -30,6 +32,11 @@ jobs:
           registry: ghcr.io
           username: "${{ github.actor }}"
           password: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Authenticate to Google Cloud
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: "projects/141074763701/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
+          service_account: "github-actions@gomod-0.iam.gserviceaccount.com"
       - name: Install Go
         uses: actions/setup-go@v3
         with:
@@ -45,6 +52,8 @@ jobs:
         run: brew install skaffold
       - name: Install Container Structure Tests
         run: brew install container-structure-test
+      - name: Install SOPS
+        run: brew install sops
 
       - name: Format Go code
         run: go fmt ./...
@@ -73,4 +82,8 @@ jobs:
         env:
           SKAFFOLD_DEFAULT_REPO: ghcr.io/damlys
           SKAFFOLD_DIGEST_SOURCE: tag
-        run: skaffold render --profile=prod
+        # render command does not trigger deploy hooks
+        run: |
+          ./scripts/sops/decrypt.sh
+          skaffold render --profile=prod
+          ./scripts/sops/rm-decrypted.sh

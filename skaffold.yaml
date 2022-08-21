@@ -32,3 +32,8 @@ profiles:
       kustomize:
         paths:
           - deploy/goapp/overlays/prod
+        hooks:
+          before:
+            - host: { command: ["scripts/sops/decrypt.sh"] }
+          after:
+            - host: { command: ["scripts/sops/rm-decrypted.sh"] }

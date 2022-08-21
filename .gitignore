@@ -17,6 +17,14 @@ thumbs.db
 /*.code-workspace
 
 #############################
+### SOPS
+#############################
+
+/deploy/goapp/overlays/prod/secret.env
+/deploy/goapp/overlays/prod/secret.json
+/deploy/goapp/overlays/prod/secret.txt
+
+#############################
 ### Docker
 #############################
 
