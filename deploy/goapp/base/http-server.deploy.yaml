@@ -51,8 +51,6 @@ spec:
               cpu: 1000m
               memory: 256M
           securityContext:
-            runAsUser: 33
-            runAsGroup: 33
             runAsNonRoot: true
             readOnlyRootFilesystem: true
             capabilities:

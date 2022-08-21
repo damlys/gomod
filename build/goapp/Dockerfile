@@ -1,8 +1,4 @@
-FROM golang:1.19 AS sdk
-# $ cat /etc/passwd | grep "www-data"
-# www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
-# $ cat /etc/group | grep "www-data"
-# www-data:x:33:
+FROM golang:1.19-alpine3.16 AS sdk
 
 WORKDIR /workspace
 
@@ -14,14 +10,10 @@ ARG SKAFFOLD_GO_GCFLAGS
 RUN CGO_ENABLED=0 go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o ./bin/goapp ./cmd/goapp
 
 
-FROM ubuntu:22.04 AS rte
-# $ cat /etc/passwd | grep "www-data"
-# www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
-# $ cat /etc/group | grep "www-data"
-# www-data:x:33:
+FROM alpine:3.16 AS rte
 
 COPY --from=sdk /workspace/bin/goapp /goapp
 ENV GODEBUG=""
 ENTRYPOINT ["/goapp"]
 CMD []
-USER 33:33
+USER 999:999
