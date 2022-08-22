@@ -46,14 +46,10 @@ jobs:
         with:
           key: "${{ runner.os }}-homebrew"
           path: /home/runner/.cache/Homebrew
-      - name: Install golangci-lint
-        run: brew install golangci-lint
-      - name: Install Skaffold
-        run: brew install skaffold
-      - name: Install Container Structure Tests
-        run: brew install container-structure-test
-      - name: Install SOPS
-        run: brew install sops
+      - run: brew install container-structure-test
+      - run: brew install golangci-lint
+      - run: brew install skaffold
+      - run: brew install sops
 
       - name: Format Go code
         run: go fmt ./...
@@ -67,10 +63,12 @@ jobs:
         run: go test -v ./...
 
       - name: Build Docker images
+        if: github.event_name == 'pull_request'
         run: skaffold build --profile=dev --file-output=skaffold-build-artifacts.json
       - name: Test Docker images
+        if: github.event_name == 'pull_request'
         run: skaffold test --profile=dev --build-artifacts=skaffold-build-artifacts.json
 
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        name: Deploy to prod
+      - name: Deploy to prod
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: skaffold run --profile=prod --default-repo="europe-central2-docker.pkg.dev/gomod-0/gomod"

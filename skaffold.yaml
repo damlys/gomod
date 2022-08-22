@@ -19,7 +19,6 @@ profiles:
     build:
       local:
         useDockerCLI: true
-        useBuildkit: false
         push: false
         tryImportMissing: false
     deploy:
@@ -28,6 +27,9 @@ profiles:
         paths:
           - deploy/goapp/overlays/dev
   - name: prod
+    build:
+      googleCloudBuild:
+        projectId: gomod-0
     deploy:
       kubeContext: gke_gomod-0_europe-central2_autopilot-cluster-1
       kustomize:
