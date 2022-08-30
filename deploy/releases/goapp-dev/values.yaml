@@ -1,11 +1,9 @@
 configEnvs:
   CONFIG_A: dev CONFIG_A
   CONFIG_B: dev CONFIG_B
-
 secretEnvs:
   SECRET_A: dev SECRET_A
   SECRET_B: dev SECRET_B
-
 configFiles:
   config.txt: |
     dev config.txt
@@ -13,7 +11,6 @@ configFiles:
     {
       "data": "dev config.json"
     }
-
 secretFiles:
   secret.txt: |
     dev secret.txt
