@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/component: http-server
         {{- include "goapp.metadataLabels" $ | nindent 8 }}
       annotations:
-        prometheus.io/scrape: "{{ .Values.httpServer.prometheus.scrape }}"
+        prometheus.io/scrape: "false"
         prometheus.io/port: http
         prometheus.io/path: /-/metrics
         checksum/config: {{ include "goapp.configsChecksum" $ }}

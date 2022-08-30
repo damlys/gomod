@@ -11,9 +11,6 @@ httpServer:
   minReplicas: 1
   maxReplicas: 1
 
-  prometheus:
-    scrape: false
-
   ingress:
     annotations: {}
     host: ""
