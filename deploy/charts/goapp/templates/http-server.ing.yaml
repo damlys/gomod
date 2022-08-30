@@ -4,7 +4,7 @@ metadata:
   name: "{{ .Release.Name }}-http-server"
   namespace: "{{ .Release.Namespace }}"
   labels:
-    app.kubernetes.io/component: "http-server"
+    app.kubernetes.io/component: http-server
     {{- include "goapp.metadataLabels" $ | nindent 4 }}
   annotations:
     {{- toYaml .Values.httpServer.ingress.annotations | nindent 4 }}

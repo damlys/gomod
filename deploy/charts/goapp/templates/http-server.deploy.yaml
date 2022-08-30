@@ -4,7 +4,7 @@ metadata:
   name: "{{ .Release.Name }}-http-server"
   namespace: "{{ .Release.Namespace }}"
   labels:
-    app.kubernetes.io/component: "http-server"
+    app.kubernetes.io/component: http-server
     {{- include "goapp.metadataLabels" $ | nindent 4 }}
 spec:
   replicas: {{ .Values.httpServer.minReplicas }}
@@ -12,17 +12,17 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app.kubernetes.io/component: "http-server"
+      app.kubernetes.io/component: http-server
       {{- include "goapp.matchLabels" $ | nindent 6 }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: "http-server"
+        app.kubernetes.io/component: http-server
         {{- include "goapp.metadataLabels" $ | nindent 8 }}
       annotations:
-        prometheus.io/scrape: "false"
-        prometheus.io/port: "http"
-        prometheus.io/path: "/-/metrics"
+        prometheus.io/scrape: "{{ .Values.httpServer.prometheus.scrape }}"
+        prometheus.io/port: http
+        prometheus.io/path: /-/metrics
         checksum/config: {{ include "goapp.configsChecksum" $ }}
     spec:
       containers:
