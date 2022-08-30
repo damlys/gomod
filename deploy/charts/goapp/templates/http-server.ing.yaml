@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Release.Name }}-http-server"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    app.kubernetes.io/component: "http-server"
+    {{- include "goapp.metadataLabels" $ | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.httpServer.ingress.annotations | nindent 4 }}
+spec:
+  rules:
+  - host: "{{ .Values.httpServer.ingress.host }}"
+    http:
+      paths:
+      - path: "{{ .Values.httpServer.ingress.path }}"
+        pathType: Prefix
+        backend:
+          service:
+            name: "{{ .Release.Name }}-http-server"
+            port:
+              name: http
+  tls:
+  - hosts:
+    - "{{ .Values.httpServer.ingress.host }}"
+    secretName: "tls-{{ .Values.httpServer.ingress.host | splitList "." | reverse | join "-" }}"
