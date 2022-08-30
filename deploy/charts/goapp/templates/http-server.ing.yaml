@@ -10,17 +10,17 @@ metadata:
     {{- toYaml .Values.httpServer.ingress.annotations | nindent 4 }}
 spec:
   rules:
-  - host: "{{ .Values.httpServer.ingress.host }}"
-    http:
-      paths:
-      - path: "{{ .Values.httpServer.ingress.path }}"
-        pathType: Prefix
-        backend:
-          service:
-            name: "{{ .Release.Name }}-http-server"
-            port:
-              name: http
+    - host: "{{ .Values.httpServer.ingress.host }}"
+      http:
+        paths:
+          - path: "{{ .Values.httpServer.ingress.path }}"
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Release.Name }}-http-server"
+                port:
+                  name: http
   tls:
-  - hosts:
-    - "{{ .Values.httpServer.ingress.host }}"
-    secretName: "tls-{{ .Values.httpServer.ingress.host | splitList "." | reverse | join "-" }}"
+    - hosts:
+        - "{{ .Values.httpServer.ingress.host }}"
+      secretName: "tls-{{ .Values.httpServer.ingress.host | splitList "." | reverse | join "-" }}"

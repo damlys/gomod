@@ -23,49 +23,49 @@ spec:
         prometheus.io/scrape: "false"
         prometheus.io/port: "http"
         prometheus.io/path: "/-/metrics"
-        checksum/config: {{ include "goapp.configChecksum" $ }}
+        checksum/config: {{ include "goapp.configsChecksum" $ }}
     spec:
       containers:
-      - name: http-server
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        envFrom:
-        - configMapRef:
-            name: "{{ .Release.Name }}-config-envs"
-        - secretRef:
-            name: "{{ .Release.Name }}-config-envs"
-        volumeMounts:
-        - name: config-files
-          mountPath: /run/secrets/goapp
-          readOnly: true
-        ports:
-        - name: http
-          containerPort: 8080
-          protocol: TCP
-        readinessProbe:
-          httpGet:
-            port: http
-            path: /-/ready
-        livenessProbe:
-          httpGet:
-            port: http
-            path: /-/healthy
-        resources:
-          requests:
-            memory: 128M
-          limits:
-            cpu: 1000m
-            memory: 256M
-        securityContext:
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-          capabilities:
-            drop:
-              - CAP_CHOWN
+        - name: http-server
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          envFrom:
+            - configMapRef:
+                name: "{{ .Release.Name }}-config-envs"
+            - secretRef:
+                name: "{{ .Release.Name }}-config-envs"
+          volumeMounts:
+            - name: config-files
+              mountPath: /run/secrets/goapp
+              readOnly: true
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: http
+              path: /-/ready
+          livenessProbe:
+            httpGet:
+              port: http
+              path: /-/healthy
+          resources:
+            requests:
+              memory: 128M
+            limits:
+              cpu: 1000m
+              memory: 256M
+          securityContext:
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - CAP_CHOWN
       volumes:
-      - name: config-files
-        projected:
-          sources:
-          - configMap:
-              name: "{{ .Release.Name }}-config-files"
-          - secret:
-              name: "{{ .Release.Name }}-config-files"
+        - name: config-files
+          projected:
+            sources:
+              - configMap:
+                  name: "{{ .Release.Name }}-config-files"
+              - secret:
+                  name: "{{ .Release.Name }}-config-files"
