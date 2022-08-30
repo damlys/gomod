@@ -7,8 +7,8 @@ app.helm.sh/release: "{{ .Release.Name }}"
 {{- define "goapp.metadataLabels" -}}
 {{ include "goapp.matchLabels" $ }}
 app.helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-app.skaffold.dev/artifact: "{{ regexReplaceAll "[/._:@]" .Values.image.repository "_" }}"
-app.skaffold.dev/tag: "{{ regexReplaceAll "[/._:@]" .Values.image.tag "_" }}"
+app.skaffold.dev/artifact: "{{ regexReplaceAll "[\\W]" .Values.image.repository "_" | trunc 63 | trimAll "_" }}"
+app.skaffold.dev/tag: "{{ regexReplaceAll "[\\W]" .Values.image.tag "_" | trunc 63 | trimAll "_" }}"
 {{- end -}}
 
 {{- define "goapp.configsChecksum" -}}
