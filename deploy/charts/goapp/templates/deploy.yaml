@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "goapp.metadataLabels" $ | nindent 4 }}
+spec:
+  replicas: {{ .Values.minReplicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{- include "goapp.matchLabels" $ | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "goapp.metadataLabels" $ | nindent 8 }}
+      annotations:
+        prometheus.io/scrape: "false"
+        prometheus.io/port: "http"
+        prometheus.io/path: "/-/metrics"
+        checksum/config: >
+          {{ include (print .Template.BasePath "/cm.yaml") $ | sha256sum }}
+          {{ include (print .Template.BasePath "/secret.yaml") $ | sha256sum }}
+    spec:
+      containers:
+      - name: "{{ .Release.Name }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        envFrom:
+        - configMapRef:
+            name: "{{ .Release.Name }}"
+        - secretRef:
+            name: "{{ .Release.Name }}"
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /-/ready
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /-/healthy
+        resources:
+          requests:
+            memory: 128M
+          limits:
+            cpu: 1000m
+            memory: 256M
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - CAP_CHOWN

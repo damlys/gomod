@@ -1,0 +1,14 @@
+envs:
+  configMap:
+    CONFIG_A: dev CONFIG_A
+    CONFIG_B: dev CONFIG_B
+  secret:
+    SECRET_A: dev SECRET_A
+    SECRET_B: dev SECRET_B
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  host: goapp-dev.gomod.damlys.dev

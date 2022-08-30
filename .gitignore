@@ -27,9 +27,7 @@ gha-creds-*.json
 ### SOPS
 #############################
 
-/deploy/goapp/overlays/prod/secret.env
-/deploy/goapp/overlays/prod/secret.json
-/deploy/goapp/overlays/prod/secret.txt
+/deploy/releases/goapp-prod/secrets.yaml
 
 #############################
 ### Docker

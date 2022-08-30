@@ -23,18 +23,35 @@ profiles:
         tryImportMissing: false
     deploy:
       kubeContext: docker-desktop
-      kustomize:
-        paths:
-          - deploy/goapp/overlays/dev
+      helm:
+        releases:
+          - name: goapp-dev
+            namespace: default
+            chartPath: deploy/charts/goapp
+            valuesFiles:
+              - deploy/releases/goapp-dev/values.yaml
+            artifactOverrides:
+              image: goapp
+            imageStrategy:
+              helm: {}
   - name: prod
     build:
       googleCloudBuild:
         projectId: gomod-0
     deploy:
       kubeContext: gke_gomod-0_europe-central2_autopilot-cluster-1
-      kustomize:
-        paths:
-          - deploy/goapp/overlays/prod
+      helm:
+        releases:
+          - name: goapp-prod
+            namespace: default
+            chartPath: deploy/charts/goapp
+            valuesFiles:
+              - deploy/releases/goapp-prod/secrets.yaml
+              - deploy/releases/goapp-prod/values.yaml
+            artifactOverrides:
+              image: goapp
+            imageStrategy:
+              helm: {}
         hooks:
           before:
             - host: { command: ["scripts/sops/decrypt.sh"] }

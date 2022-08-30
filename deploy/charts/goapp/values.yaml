@@ -1,0 +1,18 @@
+image:
+  repository: goapp
+  tag: latest
+
+envs:
+  configMap: {}
+  #  USERNAME: ""
+  secret: {}
+  #  PASSWORD: ""
+
+minReplicas: 1
+maxReplicas: 1
+
+ingress:
+  annotations: {}
+  #  kubernetes.io/ingress.class: nginx
+  host: ""
+  path: /

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Release.Name }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "goapp.metadataLabels" $ | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+spec:
+  rules:
+  - host: "{{ .Values.ingress.host }}"
+    http:
+      paths:
+      - path: "{{ .Values.ingress.path }}"
+        pathType: Prefix
+        backend:
+          service:
+            name: "{{ .Release.Name }}"
+            port:
+              name: http
+  tls:
+  - hosts:
+    - "{{ .Values.ingress.host }}"
+    secretName: "tls-{{ .Values.ingress.host | splitList "." | reverse | join "-" }}"
