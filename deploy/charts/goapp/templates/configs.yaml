@@ -15,7 +15,7 @@ metadata:
   name: "{{ .Release.Name }}-config-envs"
   namespace: "{{ .Release.Namespace }}"
 data:
-  {{- range $key, $val := .Values.secretEnvs }}
+  {{- range $key, $val := .Values.secretConfigEnvs }}
   {{ $key }}: {{ $val | b64enc | quote }}
   {{- end }}
 
@@ -37,6 +37,6 @@ metadata:
   name: "{{ .Release.Name }}-config-files"
   namespace: "{{ .Release.Namespace }}"
 data:
-  {{- range $key, $val := .Values.secretFiles }}
+  {{- range $key, $val := .Values.secretConfigFiles }}
   {{ $key }}: {{ $val | b64enc | quote }}
   {{- end }}

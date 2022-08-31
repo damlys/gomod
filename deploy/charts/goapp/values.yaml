@@ -3,9 +3,9 @@ image:
   tag: latest
 
 configEnvs: {}
-secretEnvs: {}
+secretConfigEnvs: {}
 configFiles: {}
-secretFiles: {}
+secretConfigFiles: {}
 
 httpServer:
   minReplicas: 1
