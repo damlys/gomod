@@ -46,8 +46,8 @@ profiles:
             namespace: default
             chartPath: deploy/charts/goapp
             valuesFiles:
-              - deploy/releases/goapp-prod/secrets.yaml
               - deploy/releases/goapp-prod/values.yaml
+              - deploy/releases/goapp-prod/secrets.dec.yaml
             artifactOverrides:
               image: goapp
             imageStrategy:
