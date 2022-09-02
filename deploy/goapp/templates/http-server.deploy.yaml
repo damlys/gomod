@@ -23,7 +23,7 @@ spec:
         prometheus.io/scrape: "false"
         prometheus.io/port: http
         prometheus.io/path: /-/metrics
-        checksum/config: {{ include "goapp.configsChecksum" $ }}
+        checksum/configs: "{{ include "goapp.configsChecksum" $ }}"
     spec:
       containers:
         - name: http-server
