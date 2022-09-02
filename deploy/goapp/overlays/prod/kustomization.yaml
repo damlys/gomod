@@ -17,12 +17,12 @@ configMapGenerator:
 secretGenerator:
   - name: config-envs
     envs:
-      - secret.env
+      - secret.dec.env
     behavior: merge
   - name: config-files
     files:
-      - secret.json
-      - secret.txt
+      - secret.dec.json
+      - secret.dec.txt
     behavior: merge
 namespace: default
 namePrefix: goapp-

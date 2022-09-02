@@ -12,3 +12,7 @@ insert_final_newline = true
 indent_style = tab
 [{go.mod,go.sum,go.work,go.work.sum}]
 indent_style = tab
+
+# SOPS uses 4 spaces for YAML files
+[*.{dec,enc}.yaml]
+indent_size = 4
