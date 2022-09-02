@@ -59,11 +59,11 @@ $ skaffold delete --profile=prod
 View secret
 
 ```shell
-$ sops --decrypt deploy/releases/goapp-prod/secrets.enc.yaml
+$ sops --decrypt deploy/goapp/releases/goapp-prod/secrets.enc.yaml
 ```
 
 Edit secret
 
 ```shell
-$ EDITOR="code --wait" sops deploy/releases/goapp-prod/secrets.enc.yaml
+$ EDITOR="code --wait" sops deploy/goapp/releases/goapp-prod/secrets.enc.yaml
 ```
