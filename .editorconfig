@@ -13,6 +13,6 @@ indent_style = tab
 [{go.mod,go.sum,go.work,go.work.sum}]
 indent_style = tab
 
-# SOPS (uses 4 spaces)
+# SOPS uses 4 spaces for YAML files
 [secrets.{dec,enc}.yaml]
 indent_size = 4
