@@ -10,7 +10,7 @@ spec:
   type: ClusterIP
   selector:
     app.kubernetes.io/component: http-server
-    {{- include "goapp.matchLabels" $ | nindent 4 }}
+    {{- include "goapp.selectorLabels" $ | nindent 4 }}
   ports:
     - name: http
       port: 80

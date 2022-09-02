@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: http-server
-      {{- include "goapp.matchLabels" $ | nindent 6 }}
+      {{- include "goapp.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
       labels:

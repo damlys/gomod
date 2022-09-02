@@ -56,13 +56,12 @@ profiles:
           before:
             - host:
                 command:
-                  - sops
-                  - --decrypt
-                  - --output=deploy/goapp/releases/goapp-prod/secrets.dec.yaml
-                  - deploy/goapp/releases/goapp-prod/secrets.enc.yaml
+                  - sh
+                  - -c
+                  - sops --decrypt --output=deploy/goapp/releases/goapp-prod/secrets.dec.yaml deploy/goapp/releases/goapp-prod/secrets.enc.yaml
           after:
             - host:
                 command:
-                  - rm
-                  - -f
-                  - deploy/goapp/releases/goapp-prod/secrets.dec.yaml
+                  - sh
+                  - -c
+                  - rm -f deploy/goapp/releases/goapp-prod/secrets.dec.yaml
