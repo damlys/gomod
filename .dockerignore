@@ -44,10 +44,7 @@
 .sops.yaml
 
 # decrypted secrets
-**/*.dec.env
-**/*.dec.json
-**/*.dec.txt
-**/*.dec.yaml
+**/secrets.dec.yaml
 
 #############################
 ### Docker
