@@ -68,9 +68,9 @@ jobs:
       - name: Test Docker images
         if: github.event_name == 'pull_request'
         run: skaffold test --profile=dev --build-artifacts=skaffold-build-artifacts.json
-      - name: Lint Helm chart
+      - name: Lint Helm charts
         if: github.event_name == 'pull_request'
-        run: helm lint deploy/goapp
+        run: helm lint ./deploy/*
 
       - name: Deploy to prod
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
