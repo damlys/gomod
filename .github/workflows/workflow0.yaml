@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/damlys/godev:2022-09-04-16-05-13-8d7f6d8
+      options: --user=root
     steps:
       - name: Set Git user
         run: |
