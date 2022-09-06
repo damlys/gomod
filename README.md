@@ -2,6 +2,15 @@
 
 Skaffold template for Go web services
 
+## Development Container
+
+Requirements
+
+- [Visual Studio Code](https://code.visualstudio.com/download)
+  - [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+  - Kubernetes enabled
+
 ## Skaffold
 
 Build
