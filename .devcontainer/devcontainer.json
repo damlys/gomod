@@ -1,5 +1,5 @@
 {
-  "image": "ghcr.io/damlys/godev:2022-09-06-09-42-11-e64ce98",
+  "image": "ghcr.io/damlys/godev:2022-09-07-05-57-15-86853e0",
   "runArgs": [
     "--name=gomod-devcontainer",
     "--add-host=kubernetes.docker.internal:host-gateway"
@@ -8,11 +8,12 @@
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
     "source=${localEnv:HOME}/.docker,target=/root/.docker,type=bind",
     "source=${localEnv:HOME}/.kube,target=/root/.kube,type=bind",
-    "source=${localEnv:HOME}/.config/gcloud,target=/root/.config/gcloud,type=bind",
-    "source=${localEnv:HOME}/go/pkg,target=/root/go/pkg,type=bind"
+    "source=${localEnv:HOME}/Library/Preferences/helm,target=/root/.config/helm,type=bind",
+    "source=${localEnv:HOME}/.skaffold,target=/root/.skaffold,type=bind",
+    "source=${localEnv:HOME}/.config/gcloud,target=/root/.config/gcloud,type=bind"
   ],
   "containerEnv": {
-    "EDITOR": "code --wait"
+    "EDITOR": "code --wait" // SOPS
   },
 
   "customizations": {
