@@ -16,6 +16,17 @@
     "EDITOR": "code --wait" // SOPS
   },
 
+  "portsAttributes": {
+    "8080": {
+      "label": "goapp http-server",
+      "onAutoForward": "openPreview"
+    },
+    "56268": {
+      "label": "dlv",
+      "onAutoForward": "silent"
+    }
+  },
+
   "customizations": {
     "vscode": {
       "extensions": [
