@@ -22,7 +22,7 @@
       "onAutoForward": "openPreview"
     },
     "56268": {
-      "label": "dlv",
+      "label": "skaffold debug",
       "onAutoForward": "silent"
     }
   },

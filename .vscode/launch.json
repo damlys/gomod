@@ -1,7 +1,7 @@
 {
   "configurations": [
     {
-      "name": "Connect to localhost",
+      "name": "skaffold debug",
       "type": "go",
       "request": "attach",
       "mode": "remote",
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "name": "Launch current package",
+      "name": "dlv",
       "type": "go",
       "request": "launch",
       "mode": "auto",

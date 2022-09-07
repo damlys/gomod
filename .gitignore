@@ -61,3 +61,6 @@ cover.out
 cpu.out
 mem.out
 testdata
+
+# debug
+__debug_bin
