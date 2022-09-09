@@ -1,16 +1,23 @@
 {
-  "image": "ghcr.io/damlys/godev:2022-09-08-09-19-35-16b630d",
+  "name": "gomod",
+
+  "image": "ghcr.io/damlys/godev:2022-09-08-22-13-18-cc3cf2b",
   "runArgs": [
-    "--name=gomod-devcontainer",
+    "--name=devcontainer-gomod",
     "--add-host=kubernetes.docker.internal:host-gateway"
   ],
   "mounts": [
-    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
-    "source=${localEnv:HOME}/.docker,target=/root/.docker,type=bind",
-    "source=${localEnv:HOME}/.kube,target=/root/.kube,type=bind",
-    "source=${localEnv:HOME}/Library/Preferences/helm,target=/root/.config/helm,type=bind",
-    "source=${localEnv:HOME}/.skaffold,target=/root/.skaffold,type=bind",
-    "source=${localEnv:HOME}/.config/gcloud,target=/root/.config/gcloud,type=bind"
+    "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",
+    "type=volume,source=devvolume-aws,target=/root/.aws",
+    "type=volume,source=devvolume-az,target=/root/.azure",
+    "type=volume,source=devvolume-docker,target=/root/.docker",
+    "type=volume,source=devvolume-gcloud,target=/root/.config/gcloud",
+    "type=volume,source=devvolume-gh,target=/root/.config/gh",
+    "type=volume,source=devvolume-helm,target=/root/.config/helm",
+    "type=volume,source=devvolume-kpt,target=/root/.kpt",
+    "type=volume,source=devvolume-kubectl,target=/root/.kube",
+    "type=volume,source=devvolume-skaffold,target=/root/.skaffold",
+    "type=volume,source=devvolume-terraform,target=/root/.terraform.d"
   ],
 
   "portsAttributes": {
