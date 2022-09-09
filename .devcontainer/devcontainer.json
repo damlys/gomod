@@ -20,6 +20,9 @@
     "type=volume,source=devvolume-terraform,target=/root/.terraform.d"
   ],
 
+  "initializeCommand": "curl https://raw.githubusercontent.com/damlys/godev/main/scripts/init-host.sh | sh",
+  "postStartCommand": "curl https://raw.githubusercontent.com/damlys/godev/main/scripts/init-container.sh | sh",
+
   "portsAttributes": {
     "8080": {
       "label": "goapp",

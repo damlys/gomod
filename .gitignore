@@ -40,6 +40,8 @@ secrets.dec.yaml
 ### Kubernetes
 #############################
 
+kubeconfig.yaml
+
 # skaffold build output
 /skaffold-build-artifacts.json
 

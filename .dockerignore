@@ -59,6 +59,8 @@
 ### Kubernetes
 #############################
 
+**/kubeconfig.yaml
+
 **/skaffold.yaml
 
 # skaffold build output
