@@ -1,7 +1,7 @@
 {
   "name": "gomod",
 
-  "image": "ghcr.io/damlys/godev:2022-09-08-22-13-18-cc3cf2b",
+  "image": "ghcr.io/damlys/godev:2022-09-09-20-18-02-fdfb8a1",
   "runArgs": [
     "--name=devcontainer-gomod",
     "--add-host=kubernetes.docker.internal:host-gateway"
@@ -20,8 +20,8 @@
     "type=volume,source=devvolume-terraform,target=/root/.terraform.d"
   ],
 
-  "initializeCommand": "curl https://raw.githubusercontent.com/damlys/godev/main/scripts/init-host.sh | sh",
-  "postStartCommand": "curl https://raw.githubusercontent.com/damlys/godev/main/scripts/init-container.sh | sh",
+  "initializeCommand": "curl https://raw.githubusercontent.com/damlys/godev/fdfb8a1d7ee0c00e526aa00f21f6518cbc39517e/scripts/init-host.sh | sh",
+  "postStartCommand": "curl https://raw.githubusercontent.com/damlys/godev/fdfb8a1d7ee0c00e526aa00f21f6518cbc39517e/scripts/init-container.sh | sh",
 
   "portsAttributes": {
     "8080": {
