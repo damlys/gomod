@@ -20,7 +20,7 @@ jobs:
       id-token: "write"
     runs-on: ubuntu-22.04
     container:
-      image: ghcr.io/damlys/godev:2022-09-09-20-18-02-fdfb8a1
+      image: ghcr.io/damlys/godev:2022-09-10-11-09-00-f92f569
     steps:
       - name: Set Git user
         run: |

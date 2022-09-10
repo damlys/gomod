@@ -1,27 +1,25 @@
 {
   "name": "gomod",
 
-  "image": "ghcr.io/damlys/godev:2022-09-09-20-18-02-fdfb8a1",
+  "image": "ghcr.io/damlys/godev:2022-09-10-11-09-00-f92f569",
   "runArgs": [
     "--name=devcontainer-gomod",
     "--add-host=kubernetes.docker.internal:host-gateway"
   ],
   "mounts": [
     "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",
-    "type=volume,source=devvolume-aws,target=/root/.aws",
-    "type=volume,source=devvolume-az,target=/root/.azure",
     "type=volume,source=devvolume-docker,target=/root/.docker",
     "type=volume,source=devvolume-gcloud,target=/root/.config/gcloud",
     "type=volume,source=devvolume-gh,target=/root/.config/gh",
     "type=volume,source=devvolume-helm,target=/root/.config/helm",
+    "type=volume,source=devvolume-k9s,target=/root/.config/k9s",
     "type=volume,source=devvolume-kpt,target=/root/.kpt",
     "type=volume,source=devvolume-kubectl,target=/root/.kube",
-    "type=volume,source=devvolume-skaffold,target=/root/.skaffold",
-    "type=volume,source=devvolume-terraform,target=/root/.terraform.d"
+    "type=volume,source=devvolume-skaffold,target=/root/.skaffold"
   ],
 
-  "initializeCommand": "curl https://raw.githubusercontent.com/damlys/godev/fdfb8a1d7ee0c00e526aa00f21f6518cbc39517e/scripts/init-host.sh | sh",
-  "postStartCommand": "curl https://raw.githubusercontent.com/damlys/godev/fdfb8a1d7ee0c00e526aa00f21f6518cbc39517e/scripts/init-container.sh | sh",
+  "initializeCommand": "curl https://raw.githubusercontent.com/damlys/godev/f92f569a8e4d90bbea096d65dfea1dc622ff1814/scripts/init-host.sh | sh",
+  "postStartCommand": "curl https://raw.githubusercontent.com/damlys/godev/f92f569a8e4d90bbea096d65dfea1dc622ff1814/scripts/init-container.bash | bash",
 
   "portsAttributes": {
     "8080": {
