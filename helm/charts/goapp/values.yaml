@@ -1,0 +1,17 @@
+image:
+  repository: goapp
+  tag: latest
+
+configEnvs: {}
+secretConfigEnvs: {}
+configFiles: {}
+secretConfigFiles: {}
+
+httpServer:
+  minReplicas: 1
+  maxReplicas: 1
+
+  ingress:
+    annotations: {}
+    host: ""
+    path: /
