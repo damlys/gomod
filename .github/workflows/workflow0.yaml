@@ -1,0 +1,46 @@
+name: workflow0
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  job0:
+    runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/damlys/godev:2022-09-11-14-22-32-19c79de
+    permissions:
+      id-token: write
+    steps:
+      - name: Clone Git repository
+        uses: actions/checkout@v3
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: projects/141074763701/locations/global/workloadIdentityPools/github-actions/providers/github-actions
+          service_account: github-actions@gomod-0.iam.gserviceaccount.com
+
+      - name: Vet Go code
+        run: go vet ./...
+      - name: Lint Go code
+        run: golangci-lint run ./...
+      - name: Download Go dependencies
+        run: go mod download
+      - name: Test Go code
+        run: go test -v ./...
+
+      - name: Build Docker images
+        if: github.event_name == 'pull_request'
+        run: skaffold build --profile=dev --file-output=skaffold-build-artifacts.json
+      - name: Test Docker images
+        if: github.event_name == 'pull_request'
+        run: skaffold test --profile=dev --build-artifacts=skaffold-build-artifacts.json
+
+      - name: Deploy to prod-eu1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          gcloud auth configure-docker europe-central2-docker.pkg.dev
+          gcloud container clusters get-credentials autopilot-cluster-1 --region=europe-central2 --project=gomod-0
+          skaffold run --profile=prod-eu1 --default-repo=europe-central2-docker.pkg.dev/gomod-0/gomod

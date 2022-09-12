@@ -1,0 +1,63 @@
+{
+  "name": "gomod",
+
+  "image": "ghcr.io/damlys/godev:2022-09-11-14-22-32-19c79de",
+  "runArgs": [
+    "--name=devcontainer-gomod",
+    "--add-host=kubernetes.docker.internal:host-gateway"
+  ],
+  "mounts": [
+    "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",
+    "type=volume,source=devvolume-docker,target=/root/.docker",
+    "type=volume,source=devvolume-gcloud,target=/root/.config/gcloud",
+    "type=volume,source=devvolume-gh,target=/root/.config/gh",
+    "type=volume,source=devvolume-k9s,target=/root/.config/k9s",
+    "type=volume,source=devvolume-kubectl,target=/root/.kube",
+    "type=volume,source=devvolume-skaffold,target=/root/.skaffold"
+  ],
+
+  "portsAttributes": {
+    "8080": {
+      "label": "goapp",
+      "onAutoForward": "openPreview"
+    },
+    "56268": {
+      "label": "skaffold debug",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "GitHub.vscode-pull-request-github",
+        "golang.go",
+        "googlecloudtools.cloudcode",
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
+      ],
+      "settings": {
+        "files.encoding": "utf8",
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "files.trimFinalNewlines": true,
+        "files.insertFinalNewline": true,
+
+        "[go]": {
+          "editor.defaultFormatter": "golang.go"
+        },
+        "[dockerfile]": {
+          "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "redhat.vscode-yaml"
+        },
+
+        "go.toolsManagement.autoUpdate": false,
+
+        "cloudcode.autoDependencies": "off"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+schemaVersion: 2.0.0
+commandTests:
+  - name: no go binary
+    command: which
+    args:
+      - go
+    exitCode: 1
+fileExistenceTests:
+  - name: no go directory
+    path: /go
+    shouldExist: false
+  - name: no workspaces directory
+    path: /workspaces
+    shouldExist: false
+  - name: no workspace directory
+    path: /workspace
+    shouldExist: false
+  - name: goapp binary
+    path: /goapp
+    shouldExist: true
+    uid: 0
+    gid: 0
+    isExecutableBy: any
+metadataTest:
+  entrypoint: ["/goapp"]
+  user: 999:999
