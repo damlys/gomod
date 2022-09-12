@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "name": "skaffold debug",
+      "type": "go",
+      "request": "attach",
+      "mode": "remote",
+      "host": "localhost",
+      "port": 56268,
+      "substitutePath": [
+        {
+          "from": "${workspaceFolder}",
+          "to": "/workspace"
+        }
+      ]
+    },
+    {
+      "name": "dlv",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${fileDirname}"
+    }
+  ]
+}
