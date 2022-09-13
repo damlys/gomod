@@ -5,8 +5,9 @@ metadata:
   labels:
     app.kubernetes.io/component: mongodb
 spec:
-  accessModes:
-    - ReadWriteOnce
+  storageClassName: hostpath
   resources:
     requests:
       storage: 1Gi
+  accessModes:
+    - ReadWriteOnce

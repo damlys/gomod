@@ -5,10 +5,10 @@ metadata:
   labels:
     app.kubernetes.io/component: mongodb
 spec:
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 1Gi
   storageClassName: hostpath
   hostPath:
-    path: /data/mongodb-data
+    path: /mnt/mongodb-data
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce

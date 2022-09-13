@@ -1,4 +1,3 @@
-# https://github.com/kubernetes-sigs/kustomize/blob/master/examples/transformerconfigs/README.md#name-reference-transformer
 nameReference:
   - version: v1
     kind: Service
