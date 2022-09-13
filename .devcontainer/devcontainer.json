@@ -21,6 +21,10 @@
       "label": "goapp",
       "onAutoForward": "openPreview"
     },
+    "27017": {
+      "label": "mongodb",
+      "onAutoForward": "notify"
+    },
     "56268": {
       "label": "skaffold debug",
       "onAutoForward": "silent"
@@ -34,6 +38,7 @@
         "GitHub.vscode-pull-request-github",
         "golang.go",
         "googlecloudtools.cloudcode",
+        "mongodb.mongodb-vscode",
         "ms-azuretools.vscode-docker",
         "ms-kubernetes-tools.vscode-kubernetes-tools"
       ],
