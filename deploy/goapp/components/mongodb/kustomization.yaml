@@ -5,8 +5,6 @@ resources:
   - mongodb-data.pvc.yaml
   - mongodb.deploy.yaml
   - mongodb.svc.yaml
-configurations:
-  - configurations.yaml
 configMapGenerator:
   - name: mongodb-envs
     literals:
@@ -25,3 +23,5 @@ secretGenerator:
     literals:
       - MONGODB_PASSWORD=Secret123
     behavior: merge
+configurations:
+  - configurations.yaml
