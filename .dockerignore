@@ -1,0 +1,21 @@
+*
+!go.mod
+!go.sum
+!cmd/
+!internal/
+!pkg/
+
+# system
+**/.DS_Store
+**/*.bak
+**/*.swp
+**/*.tmp
+**/*~
+**/desktop.ini
+**/thumbs.db
+
+# go
+**/__debug_bin
+**/*.out
+**/*.test
+**/testdata

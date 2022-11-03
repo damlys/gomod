@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongodb
+  labels:
+    app.kubernetes.io/component: mongodb
+spec:
+  containers:
+    - name: mongodb
+      image: mongo:5
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512M
+      ports:
+        - name: mongodb
+          containerPort: 27017
+          protocol: TCP
+      envFrom:
+        - configMapRef:
+            name: mongodb-envs
+        - secretRef:
+            name: mongodb-envs
+      volumeMounts:
+        - name: data
+          mountPath: /data/db
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: mongodb-data

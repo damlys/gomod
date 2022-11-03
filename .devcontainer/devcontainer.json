@@ -1,0 +1,79 @@
+{
+  "name": "gomod",
+  "initializeCommand": "curl https://raw.githubusercontent.com/damlys/godev/a2d7cdffd23ab77c4cd98911a3e37c497ce3ff55/scripts/init-host.sh | sh",
+  "postAttachCommand": "curl https://raw.githubusercontent.com/damlys/godev/a2d7cdffd23ab77c4cd98911a3e37c497ce3ff55/scripts/init-container.bash | bash",
+
+  "image": "ghcr.io/damlys/godev:2022-10-31-12-08-20-a2d7cdf",
+  "runArgs": [
+    "--name=devcontainer-gomod",
+    "--add-host=kubernetes.docker.internal:host-gateway"
+    //
+  ],
+  "containerEnv": {
+    "EDITOR": "code --wait" // SOPS default editor
+  },
+  "mounts": [
+    "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",
+    "type=volume,source=devvolume-docker,target=/root/.docker",
+    "type=volume,source=devvolume-gcloud,target=/root/.config/gcloud",
+    "type=volume,source=devvolume-gh,target=/root/.config/gh",
+    "type=volume,source=devvolume-k9s,target=/root/.config/k9s",
+    "type=volume,source=devvolume-kube,target=/root/.kube",
+    "type=volume,source=devvolume-skaffold,target=/root/.skaffold"
+  ],
+
+  "portsAttributes": {
+    "8080": {
+      "label": "goapp",
+      "onAutoForward": "openPreview"
+    },
+    "27017": {
+      "label": "mongodb",
+      "onAutoForward": "notify"
+    },
+    "56268": {
+      "label": "skaffold debug",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "foxundermoon.shell-format",
+        "GitHub.vscode-pull-request-github",
+        "golang.go",
+        "googlecloudtools.cloudcode",
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "redhat.vscode-xml"
+      ],
+      "settings": {
+        "files.encoding": "utf8",
+        "files.eol": "\n",
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+        "prettier.printWidth": 120,
+        "yaml.format.printWidth": 120,
+
+        "[dockerfile]": { "editor.defaultFormatter": "ms-azuretools.vscode-docker" },
+        "[go]": { "editor.defaultFormatter": "golang.go" },
+        "[ignore]": { "editor.defaultFormatter": "foxundermoon.shell-format" },
+        "[json][jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+        "[shellscript]": { "editor.defaultFormatter": "foxundermoon.shell-format" },
+        "[xml]": { "editor.defaultFormatter": "redhat.vscode-xml" },
+        "[yaml]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
+
+        "cloudcode.autoDependencies": "off",
+
+        "go.lintTool": "golangci-lint",
+        "go.toolsManagement.autoUpdate": false,
+
+        "shellformat.path": "/usr/local/bin/shfmt"
+      }
+    }
+  }
+}

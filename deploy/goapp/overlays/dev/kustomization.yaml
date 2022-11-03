@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+components:
+  - ../../components/mongodb
+configMapGenerator:
+  - name: config-envs
+    literals:
+      - CONFIG_A=dev CONFIG_A
+      - CONFIG_B=dev CONFIG_B
+    behavior: merge
+secretGenerator:
+  - name: config-envs
+    literals:
+      - SECRET_A=dev SECRET_A
+      - SECRET_B=dev SECRET_B
+    behavior: merge
+namespace: default
+namePrefix: goapp-
+nameSuffix: -dev
+commonLabels:
+  app.kubernetes.io/part-of: gomod
+  app.kubernetes.io/name: goapp
+  app.kubernetes.io/instance: dev

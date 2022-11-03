@@ -1,0 +1,47 @@
+apiVersion: skaffold/v3alpha1
+kind: Config
+build:
+  tagPolicy:
+    gitCommit: {}
+  artifacts:
+    - image: goapp
+      context: .
+      docker:
+        dockerfile: build/goapp/Dockerfile
+test:
+  - image: goapp
+    structureTests:
+      - test/goapp/container-structure.yaml
+
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+      - command: debug
+    build:
+      local:
+        useDockerCLI: true
+        push: false
+        tryImportMissing: false
+    manifests:
+      kustomize:
+        paths:
+          - deploy/goapp/overlays/dev
+    deploy:
+      kubeContext: docker-desktop
+      kubectl: {}
+
+  - name: prod-eu1
+    #--default-repo=europe-central2-docker.pkg.dev/gomod-0/gomod
+    build:
+      googleCloudBuild:
+        projectId: gomod-0
+    manifests:
+      hooks:
+        before: [host: { command: ["scripts/sops/decrypt.bash"] }]
+      kustomize:
+        paths:
+          - deploy/goapp/overlays/prod
+    deploy:
+      kubeContext: gke_gomod-0_europe-central2_autopilot-cluster-1
+      kubectl: {}

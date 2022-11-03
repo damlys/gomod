@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-data
+  labels:
+    app.kubernetes.io/component: mongodb
+spec:
+  storageClassName: hostpath
+  hostPath:
+    path: /mnt/mongodb-data
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
