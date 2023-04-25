@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine3.16 AS builder
+FROM golang:1.20-alpine3.17 AS builder
 
 WORKDIR /workspace
 
@@ -10,7 +10,7 @@ ARG SKAFFOLD_GO_GCFLAGS
 RUN CGO_ENABLED=0 go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o ./bin/goapp ./cmd/goapp
 
 
-FROM alpine:3.16
+FROM alpine:3.17
 
 COPY --from=builder /workspace/bin/goapp /goapp
 ENV GODEBUG=""
