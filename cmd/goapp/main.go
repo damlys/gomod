@@ -6,20 +6,16 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/-/ready", func(res http.ResponseWriter, req *http.Request) {
-		res.Header().Add("Content-Type", "text/plain")
+	http.HandleFunc("/ready", func(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusOK)
-		if _, err := res.Write([]byte("Ready.")); err != nil {
-			log.Printf("ready write error: %s\n", err)
-		}
+		res.Header().Add("Content-Type", "text/plain")
+		_, _ = res.Write([]byte("Ready."))
 	})
 
-	http.HandleFunc("/-/healthy", func(res http.ResponseWriter, req *http.Request) {
-		res.Header().Add("Content-Type", "text/plain")
+	http.HandleFunc("/healthy", func(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusOK)
-		if _, err := res.Write([]byte("Healthy.")); err != nil {
-			log.Printf("healthy write error: %s\n", err)
-		}
+		res.Header().Add("Content-Type", "text/plain")
+		_, _ = res.Write([]byte("Healthy."))
 	})
 
 	http.HandleFunc("/hello", hello)

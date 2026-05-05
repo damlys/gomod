@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+function main {
+  local files
+  files="$(gofmt -l .)"
+  echo "$files"
+  test -z "$files"
+}
+
+main "$@"

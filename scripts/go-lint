@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+function main {
+  go vet ./...
+  golangci-lint run ./...
+}
+
+main "$@"

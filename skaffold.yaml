@@ -1,17 +1,17 @@
-apiVersion: skaffold/v3alpha1
+apiVersion: skaffold/v4beta13
 kind: Config
 build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-    - image: goapp
+    - image: europe-central2-docker.pkg.dev/gogcp-main-8/private-docker-images/gomod/goapp
       context: .
       docker:
         dockerfile: build/goapp/Dockerfile
 test:
-  - image: goapp
+  - image: europe-central2-docker.pkg.dev/gogcp-main-8/private-docker-images/gomod/goapp
     structureTests:
-      - test/goapp/container-structure.yaml
+      - test/goapp/container-structure-test.yaml
 
 profiles:
   - name: dev
@@ -22,26 +22,35 @@ profiles:
       local:
         useDockerCLI: true
         push: false
-        tryImportMissing: false
-    manifests:
-      kustomize:
-        paths:
-          - deploy/goapp/overlays/dev
     deploy:
+      helm:
+        releases:
+          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-8/private-helm-charts/gorun/apps/http-server
+            version: 0.8.100
+            name: goapp-dev
+            namespace: default
+            valuesFiles:
+              - deploy/helm-releases/goapp-dev/values.yaml
       kubeContext: docker-desktop
-      kubectl: {}
+    portForward:
+      - resourceType: service
+        resourceName: goapp-dev
+        namespace: default
+        port: 8080
+        localPort: 8080
 
-  - name: prod-eu1
-    #--default-repo=europe-central2-docker.pkg.dev/gomod-0/gomod
+  - name: test
     build:
-      googleCloudBuild:
-        projectId: gomod-0
-    manifests:
-      hooks:
-        before: [host: { command: ["scripts/sops/decrypt.bash"] }]
-      kustomize:
-        paths:
-          - deploy/goapp/overlays/prod
+      local:
+        useDockerCLI: true
+        push: true
     deploy:
-      kubeContext: gke_gomod-0_europe-central2_autopilot-cluster-1
-      kubectl: {}
+      helm:
+        releases:
+          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-8/private-helm-charts/gorun/apps/http-server
+            version: 0.8.100
+            name: goapp-test-8
+            namespace: gomod-test-8
+            valuesFiles:
+              - deploy/helm-releases/goapp-test-8/values.yaml
+      kubeContext: gke_gogcp-test-8_europe-central2-a_gogke-test-8

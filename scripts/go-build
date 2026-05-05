@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+function main {
+  go build -o ./bin/goapp ./cmd/goapp
+}
+
+main "$@"

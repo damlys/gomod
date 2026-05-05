@@ -1,46 +1,66 @@
 name: workflow0
 on:
-  push:
-    branches:
-      - main
   pull_request:
+    paths:
+      - "**"
+      - "!**.md"
+  push:
+    paths:
+      - "**"
+      - "!**.md"
     branches:
       - main
-permissions:
-  id-token: write
 jobs:
   job0:
-    runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/damlys/godev:2022-10-31-12-08-20-a2d7cdf
+    name: job0
+    runs-on: ubuntu-24.04
+    container: ghcr.io/damlys/gorun-devcontainer:0.8.100
     steps:
-      - name: Clone Git repository
-        uses: actions/checkout@v3
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v0
+      - name: git clone (PR)
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
         with:
-          workload_identity_provider: projects/141074763701/locations/global/workloadIdentityPools/github-actions/providers/github-actions
-          service_account: github-actions@gomod-0.iam.gserviceaccount.com
+          ref: ${{ github.head_ref }}
+      - name: git clone (not PR)
+        if: github.event_name != 'pull_request'
+        uses: actions/checkout@v4
+      - name: git clone (fix)
+        run: git config --system --add safe.directory "$GITHUB_WORKSPACE"
+      - name: git config user
+        run: git config --global user.name "github-actions" && git config --global user.email "github-actions@github.com"
 
-      - name: Vet Go code
-        run: go vet ./...
-      - name: Lint Go code
-        run: golangci-lint run ./...
-      - name: Download Go dependencies
-        run: go mod download
-      - name: Test Go code
-        run: go test -v ./...
+      - name: gcloud auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+          create_credentials_file: true
+          cleanup_credentials: true
+      - name: docker auth (Google Artifact Registry)
+        run: gcloud auth configure-docker "europe-central2-docker.pkg.dev"
+      - name: helm auth (Google Artifact Registry)
+        run: gcloud auth print-access-token | helm registry login --username="oauth2accesstoken" --password-stdin "europe-central2-docker.pkg.dev"
+      - name: kube auth (Google Kubernetes Engine)
+        run: gcloud --project="gogcp-test-8" container clusters --region="europe-central2-a" get-credentials "gogke-test-8"
+      - name: kube namespace
+        run: kubectl config set-context --current --namespace="gomod-test-8"
 
-      - name: Build Docker images
-        if: github.event_name == 'pull_request'
-        run: skaffold build --profile=dev --file-output=skaffold-build-artifacts.json
-      - name: Test Docker images
-        if: github.event_name == 'pull_request'
-        run: skaffold test --profile=dev --build-artifacts=skaffold-build-artifacts.json
+      - name: download dependencies
+        run: ./scripts/go-download-dependencies
+      - name: scan vulnerabilities
+        run: ./scripts/go-scan-vulnerabilities
+        continue-on-error: true
+      - name: format check
+        run: ./scripts/go-format-check
+      - name: lint
+        run: ./scripts/go-lint
+      - name: build
+        run: ./scripts/go-build
+      - name: test
+        run: ./scripts/go-test
 
-      - name: Deploy to prod-eu1
+      - name: test images
+        run: ./scripts/skaffold-test
+
+      - name: deploy to test env
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          gcloud auth configure-docker europe-central2-docker.pkg.dev
-          gcloud container clusters get-credentials autopilot-cluster-1 --region=europe-central2 --project=gomod-0
-          skaffold run --profile=prod-eu1 --default-repo=europe-central2-docker.pkg.dev/gomod-0/gomod
+        run: skaffold run --profile="test"

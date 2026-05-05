@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+function main {
+  skaffold render --profile="dev" --output="./skaffold-manifests-render.yaml" --digest-source="tag"
+}
+
+main "$@"

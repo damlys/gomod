@@ -1,85 +1,69 @@
 {
-  "name": "gomod",
-  "initializeCommand": "curl https://raw.githubusercontent.com/damlys/godev/a2d7cdffd23ab77c4cd98911a3e37c497ce3ff55/scripts/init-host.sh | sh",
-  "postAttachCommand": "curl https://raw.githubusercontent.com/damlys/godev/a2d7cdffd23ab77c4cd98911a3e37c497ce3ff55/scripts/init-container.bash | bash",
+  "name": "devcontainer-damlys-${localWorkspaceFolderBasename}",
+  "initializeCommand": ".devcontainer/docker-desktop-kubeconfig",
 
-  "image": "ghcr.io/damlys/godev:2022-10-31-12-08-20-a2d7cdf",
+  "image": "europe-central2-docker.pkg.dev/gogcp-main-8/private-docker-images/gorun/core/devcontainer:0.8.100",
   "runArgs": [
-    "--name=devcontainer-gomod",
-    "--env-file=${localEnv:HOME}${localEnv:USERPROFILE}/workspace/devcontainer.env",
-    "--add-host=kubernetes.docker.internal:host-gateway"
+    "--name=devcontainer-damlys-${localWorkspaceFolderBasename}",
+    "--add-host=kubernetes.docker.internal:host-gateway",
+    "--env-file=${localEnv:HOME}/workspace/devcontainer-damlys.env"
     //
   ],
   "containerEnv": {
-    "EDITOR": "code --wait" // SOPS default editor
+    "DOCKER_BUILDKIT": "1",
+    "EDITOR": "code --wait",
+    "HELM_EXPERIMENTAL_OCI": "1",
+    "KUBECONFIG": "/root/.kube/config:/root/docker-desktop-kubeconfig.yaml"
   },
   "mounts": [
     "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",
-    "type=volume,source=devvolume-aws,target=/root/.aws",
-    "type=volume,source=devvolume-azure,target=/root/.azure",
-    "type=volume,source=devvolume-docker,target=/root/.docker",
-    "type=volume,source=devvolume-gcloud,target=/root/.config/gcloud",
-    "type=volume,source=devvolume-gh,target=/root/.config/gh",
-    "type=volume,source=devvolume-helm,target=/root/.config/helm",
-    "type=volume,source=devvolume-k9s,target=/root/.config/k9s",
-    "type=volume,source=devvolume-kpt,target=/root/.kpt",
-    "type=volume,source=devvolume-kube,target=/root/.kube",
-    "type=volume,source=devvolume-skaffold,target=/root/.skaffold",
-    "type=volume,source=devvolume-terraform,target=/root/.terraform.d"
+    "type=bind,source=${localEnv:HOME}/workspace/docker-desktop-kubeconfig.yaml,target=/root/docker-desktop-kubeconfig.yaml",
+    "type=volume,source=devcontainer-damlys-docker,target=/root/.docker",
+    "type=volume,source=devcontainer-damlys-firebase,target=/root/.config/configstore",
+    "type=volume,source=devcontainer-damlys-gcloud,target=/root/.config/gcloud",
+    "type=volume,source=devcontainer-damlys-gemini,target=/root/.gemini",
+    "type=volume,source=devcontainer-damlys-github,target=/root/.config/gh",
+    "type=volume,source=devcontainer-damlys-grafanactl,target=/root/.config/grafanactl",
+    "type=volume,source=devcontainer-damlys-helm,target=/root/.config/helm",
+    "type=volume,source=devcontainer-damlys-kube,target=/root/.kube",
+    "type=volume,source=devcontainer-damlys-terraform,target=/root/.terraform.d",
+    "type=volume,source=devcontainer-damlys-velero,target=/root/.config/velero"
+    //
   ],
-
   "portsAttributes": {
-    "8080": {
-      "label": "goapp",
-      "onAutoForward": "openPreview"
-    },
-    "27017": {
-      "label": "mongodb",
-      "onAutoForward": "notify"
-    },
-    "56268": {
-      "label": "skaffold debug",
-      "onAutoForward": "silent"
-    }
+    "5432": { "label": "postgres", "onAutoForward": "notify" },
+    "8080": { "label": "goapp", "onAutoForward": "openPreview" },
+    "56268": { "label": "skaffold debug", "onAutoForward": "silent" }
   },
 
   "customizations": {
     "vscode": {
       "extensions": [
-        "amazonwebservices.aws-toolkit-vscode", // https://aws.amazon.com/visualstudiocode/
-        "eamodio.gitlens", // https://github.com/gitkraken/vscode-gitlens
-        "esbenp.prettier-vscode", // https://prettier.io/docs/en/editors.html#visual-studio-code
-        "foxundermoon.shell-format", // https://github.com/foxundermoon/vs-shell-format
-        "GitHub.vscode-pull-request-github", // https://vscode.github.com/
-        "golang.go", // https://github.com/golang/vscode-go
-        "googlecloudtools.cloudcode", // https://cloud.google.com/code
+        "docker.docker",
+        "google.geminicodeassist",
+        "googlecloudtools.cloudcode",
         "hashicorp.hcl",
-        "hashicorp.terraform", // https://www.terraform.io/docs/terraform-tools
-        "ms-azuretools.vscode-docker",
+        "hashicorp.terraform",
         "ms-kubernetes-tools.vscode-kubernetes-tools",
-        "ms-vscode.vscode-node-azure-pack", // https://code.visualstudio.com/docs/azure/extensions
         "redhat.vscode-xml",
-        "streetsidesoftware.code-spell-checker" // https://streetsidesoftware.com/vscode-spell-checker/
+        "redhat.vscode-yaml",
+        // Golang
+        "golang.go",
+        // Python
+        "ms-python.autopep8",
+        "ms-python.python",
+        // Node.js
+        "esbenp.prettier-vscode",
+        // Shell script
+        "foxundermoon.shell-format@7.2.5",
+        "timonwong.shellcheck"
       ],
       "settings": {
-        "[dockerfile]": { "editor.defaultFormatter": "ms-azuretools.vscode-docker" },
-        "[go]": { "editor.defaultFormatter": "golang.go" },
-        "[hcl]": { "editor.defaultFormatter": "hashicorp.hcl" },
-        "[helm]": { "editor.defaultFormatter": null, "editor.formatOnSave": false },
-        "[json][jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-        "[ignore]": { "editor.defaultFormatter": "foxundermoon.shell-format" },
-        "[shellscript]": { "editor.defaultFormatter": "foxundermoon.shell-format" },
-        "[terraform][terraform-vars]": { "editor.defaultFormatter": "hashicorp.terraform" },
-        "[xml]": { "editor.defaultFormatter": "redhat.vscode-xml" },
-        "[yaml]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
-
         "cloudcode.autoDependencies": "off",
-
+        // Golang
         "go.lintTool": "golangci-lint",
         "go.toolsManagement.autoUpdate": false,
-
-        "redhat.telemetry.enabled": false,
-
+        // Shell script
         "shellformat.path": "/usr/local/bin/shfmt"
       }
     }

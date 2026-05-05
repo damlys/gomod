@@ -4,6 +4,10 @@
 !cmd/
 !internal/
 !pkg/
+!vendor/
+
+#
+**/*debug*
 
 # system
 **/.DS_Store

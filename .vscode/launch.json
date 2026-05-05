@@ -14,12 +14,7 @@
       "mode": "remote",
       "host": "localhost",
       "port": 56268,
-      "substitutePath": [
-        {
-          "from": "${workspaceFolder}",
-          "to": "/workspace"
-        }
-      ]
+      "substitutePath": [{ "from": "${workspaceFolder}", "to": "/go" }]
     }
   ]
 }

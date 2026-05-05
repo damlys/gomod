@@ -1,7 +1,0 @@
-nameReference:
-  - version: v1
-    kind: Service
-    fieldSpecs:
-      - version: v1
-        kind: ConfigMap
-        path: data/MONGODB_HOST
