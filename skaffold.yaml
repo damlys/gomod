@@ -4,12 +4,12 @@ build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-    - image: europe-central2-docker.pkg.dev/gogcp-main-8/private-docker-images/gomod/goapp
+    - image: europe-central2-docker.pkg.dev/gogcp-main-9/private-docker-images/gomod/goapp
       context: .
       docker:
         dockerfile: build/goapp/Dockerfile
 test:
-  - image: europe-central2-docker.pkg.dev/gogcp-main-8/private-docker-images/gomod/goapp
+  - image: europe-central2-docker.pkg.dev/gogcp-main-9/private-docker-images/gomod/goapp
     structureTests:
       - test/goapp/container-structure-test.yaml
 
@@ -25,8 +25,8 @@ profiles:
     deploy:
       helm:
         releases:
-          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-8/private-helm-charts/gorun/apps/http-server
-            version: 0.8.100
+          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-9/private-helm-charts/gorun/apps/http-server
+            version: 0.9.100
             name: goapp-dev
             namespace: default
             valuesFiles:
@@ -47,10 +47,10 @@ profiles:
     deploy:
       helm:
         releases:
-          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-8/private-helm-charts/gorun/apps/http-server
-            version: 0.8.100
-            name: goapp-test-8
-            namespace: gomod-test-8
+          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-9/private-helm-charts/gorun/apps/http-server
+            version: 0.9.100
+            name: goapp-test-9
+            namespace: gomod-test-9
             valuesFiles:
-              - deploy/helm-releases/goapp-test-8/values.yaml
-      kubeContext: gke_gogcp-test-8_europe-central2-a_gogke-test-8
+              - deploy/helm-releases/goapp-test-9/values.yaml
+      kubeContext: gke_gogcp-test-9_europe-central2-a_gogke-test-9
