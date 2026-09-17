@@ -13,8 +13,8 @@ on:
 jobs:
   job0:
     name: job0
-    runs-on: ubuntu-24.04
-    container: ghcr.io/damlys/gorun-devcontainer:0.8.100
+    runs-on: ubuntu-26.04
+    container: damlys/gorun-devcontainer:0.9.100
     steps:
       - name: git clone (PR)
         if: github.event_name == 'pull_request'
@@ -40,9 +40,9 @@ jobs:
       - name: helm auth (Google Artifact Registry)
         run: gcloud auth print-access-token | helm registry login --username="oauth2accesstoken" --password-stdin "europe-central2-docker.pkg.dev"
       - name: kube auth (Google Kubernetes Engine)
-        run: gcloud --project="gogcp-test-8" container clusters --region="europe-central2-a" get-credentials "gogke-test-8"
+        run: gcloud --project="gogcp-test-9" container clusters --region="europe-central2-a" get-credentials "gogke-test-9"
       - name: kube namespace
-        run: kubectl config set-context --current --namespace="gomod-test-8"
+        run: kubectl config set-context --current --namespace="gomod-test-9"
 
       - name: download dependencies
         run: ./scripts/go-download-dependencies
