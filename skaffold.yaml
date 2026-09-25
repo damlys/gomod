@@ -50,7 +50,7 @@ profiles:
           - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-9/private-helm-charts/gorun/apps/http-server
             version: 0.9.100
             name: goapp-test-9
-            namespace: gomod-test-9
+            namespace: workspace-gomod-test-9
             valuesFiles:
               - deploy/helm-releases/goapp-test-9/values.yaml
       kubeContext: gke_gogcp-test-9_europe-central2-a_gogke-test-9
