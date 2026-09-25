@@ -42,7 +42,7 @@ jobs:
       - name: kube auth (Google Kubernetes Engine)
         run: gcloud --project="gogcp-test-9" container clusters --region="europe-central2-a" get-credentials "gogke-test-9"
       - name: kube namespace
-        run: kubectl config set-context --current --namespace="gomod-test-9"
+        run: kubectl config set-context --current --namespace="workspace-gomod-test-9"
 
       - name: download dependencies
         run: ./scripts/go-download-dependencies
