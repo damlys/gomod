@@ -25,8 +25,8 @@ profiles:
     deploy:
       helm:
         releases:
-          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-9/private-helm-charts/gorun/apps/http-server
-            version: 0.9.100
+          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-9/private-helm-charts/gorun/core/http-server
+            version: 0.9.101
             name: goapp-dev
             namespace: default
             valuesFiles:
@@ -47,8 +47,8 @@ profiles:
     deploy:
       helm:
         releases:
-          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-9/private-helm-charts/gorun/apps/http-server
-            version: 0.9.100
+          - remoteChart: oci://europe-central2-docker.pkg.dev/gogcp-main-9/private-helm-charts/gorun/core/http-server
+            version: 0.9.101
             name: goapp-test-9
             namespace: workspace-gomod-test-9
             valuesFiles:
